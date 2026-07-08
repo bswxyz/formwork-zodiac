@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ZODIAC — Guide · How this was built</title>
+<meta name="description" content="How the ZODIAC site was designed and built by Fable: an interactive canvas star map of twelve constellations on a slowly rotating ecliptic wheel, with parallax, twinkle and shooting stars." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+<style>
+  :root{--bg:#070a18;--bg2:#0c1226;--ink:#e7ebfb;--dim:#a3a9c9;--faint:#8a90b8;--accent:#e3bd77;--line:rgba(227,189,119,.18)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:"Jost",system-ui,sans-serif;font-weight:300;line-height:1.68;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(1.4px 1.4px at 12% 18%,rgba(231,235,251,.5),transparent),radial-gradient(1.5px 1.5px at 82% 12%,rgba(227,189,119,.5),transparent),radial-gradient(1.2px 1.2px at 64% 74%,rgba(231,235,251,.4),transparent);background-attachment:fixed}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:760px;margin:0 auto;padding:clamp(28px,6vw,80px) clamp(20px,5vw,32px)}
+  .top{display:flex;justify-content:space-between;align-items:center;font-family:"Space Mono",monospace;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:clamp(40px,8vh,90px)}
+  .top a{color:var(--dim)}
+  .brand{font-family:"Cormorant Garamond",serif;font-size:1.2rem;letter-spacing:.4em;color:var(--ink)}
+  h1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(2.6rem,8vw,4.4rem);line-height:1.03;letter-spacing:-.01em;margin-bottom:1.2rem}
+  h1 em{color:var(--accent);font-style:italic}
+  .lede{font-size:clamp(1.1rem,2.2vw,1.32rem);color:var(--dim);max-width:56ch;margin-bottom:3.2rem}
+  h2{font-family:"Cormorant Garamond",serif;font-weight:400;font-size:clamp(1.7rem,4vw,2.5rem);margin:2.8rem 0 1rem;letter-spacing:-.01em}
+  p{color:var(--dim);margin:0 0 1.1rem;max-width:64ch}
+  .tag{display:inline-block;font-family:"Space Mono",monospace;font-size:.7rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent);margin-bottom:1.4rem}
+  ul{color:var(--dim);margin:0 0 1.2rem 1.2rem}
+  li{margin:.4rem 0}
+  strong{color:var(--ink);font-weight:400}
+  code{font-family:"Space Mono",monospace;font-size:.84em;background:rgba(227,189,119,.1);padding:.12em .4em;border-radius:3px;color:var(--ink)}
+  pre{background:#0b1024;border:1px solid var(--line);border-radius:8px;padding:18px 20px;overflow-x:auto;margin:0 0 1.4rem;font-size:.8rem;line-height:1.62}
+  pre code{background:none;padding:0;color:var(--dim)}
+  .rule{height:1px;background:var(--line);margin:3rem 0}
+  .stack{list-style:none;margin:0 0 1.2rem;padding:0;display:grid;gap:2px}
+  .stack li{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+  .stack b{color:var(--ink);font-weight:400;min-width:140px;display:inline-block}
+  footer{margin-top:4rem;padding-top:2rem;border-top:1px solid var(--line);font-family:"Space Mono",monospace;font-size:.74rem;letter-spacing:.04em;color:var(--faint)}
+  footer strong{color:var(--accent);font-weight:400}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="../">ZODIAC ✦</a>
+    <a href="../">← Back to site</a>
+  </div>
+
+  <span class="tag">Build guide · Site 25 of 25</span>
+  <h1>An interactive sky, drawn as a <em>rotating wheel</em>.</h1>
+  <p class="lede">ZODIAC is one of 25 sites designed and built by Fable to demonstrate web design,
+    motion, and restraint. Here is exactly how the star map was made — and how you can build the same.</p>
+
+  <h2>The idea</h2>
+  <p>The brief was "read the sky." Instead of a photograph of stars, the hero is a
+    <strong>generative, interactive star map</strong>: a few hundred twinkling stars and twelve
+    stylised constellations laid out on the ecliptic — the sun's yearly road — arranged as a
+    slowly turning wheel. Everything else (an elegant serif, gold on midnight, wide small-caps
+    labels) exists to let that sky breathe.</p>
+
+  <h2>The stack</h2>
+  <ul class="stack">
+    <li><b>Hero visual</b> A single 2D <code>&lt;canvas&gt;</code> — no library, no WebGL, ~13&nbsp;KB of JavaScript.</li>
+    <li><b>Motion</b> One <code>requestAnimationFrame</code> loop; CSS transitions handle reveals and the intro.</li>
+    <li><b>Type</b> Cormorant Garamond (display) with Jost (interface) and Space Mono (readouts).</li>
+    <li><b>Build</b> Plain HTML/CSS/JS. No bundler, no framework. It just runs.</li>
+    <li><b>Host</b> GitHub Pages, straight from the repo's <code>main</code> branch.</li>
+  </ul>
+
+  <h2>The signature technique: an ecliptic wheel</h2>
+  <p>Everything lives in a small <strong>world coordinate system</strong> centred on the screen.
+    Each constellation is a set of node offsets around an anchor placed on an ellipse; the twelve
+    anchors sit at 30° intervals, Aries at twelve o'clock. Every point is rotated by one shared
+    angle that creeps forward each frame, so the whole sky drifts as the real one does — one turn
+    every seventeen minutes.</p>
+  <pre><code>// world -> screen: rotate, scale, then add camera + depth parallax
+const rx = u * cos - v * sin, ry = u * sin + v * cos;
+const sx = cx + rx * S + cam.x + par.x * depth;
+const sy = cy + ry * S + cam.y + par.y * depth;</code></pre>
+  <p>Stars carry a <strong>depth</strong>, so they parallax by different amounts as the cursor moves —
+    near stars swim, far stars barely stir. Hovering near a constellation (or choosing a sign)
+    eases its <code>glow</code> toward 1: the lines brighten, the nodes swell, a name fades in, and
+    the camera nudges a little toward it. Shooting stars spawn on a small per-frame probability and
+    streak along a fading gradient tail.</p>
+
+  <h2>Details that matter</h2>
+  <ul>
+    <li><strong>One frame, many readers</strong> — the sky is a <code>position:fixed</code> backdrop, so hovering a house in the grid lights its figure behind the whole page.</li>
+    <li><strong>Reduced motion</strong> — with <code>prefers-reduced-motion</code> the loop never starts: one static frame renders, no drift, no shooting stars; hover still re-draws once to highlight.</li>
+    <li><strong>Robustness</strong> — <code>devicePixelRatio</code> is capped at 1.5; the 2D context is feature-detected, with a CSS-gradient starfield fallback if it is missing.</li>
+    <li><strong>Live readout</strong> — the "sky tonight" panel computes real sidereal time and moon phase from the current date, ticking once a second.</li>
+  </ul>
+
+  <h2>Ship it on GitHub Pages</h2>
+  <p>Every site here is static, so hosting is three commands:</p>
+  <pre><code>git init -b main &amp;&amp; git add -A &amp;&amp; git commit -m "ship"
+gh repo create fable-zodiac --public --source=. --push
+gh api --method POST /repos/OWNER/fable-zodiac/pages \
+  -f 'source[branch]=main' -f 'source[path]=/'</code></pre>
+  <p>Use <strong>relative paths</strong> (<code>./main.js</code>, not <code>/main.js</code>) because project
+    Pages live under <code>/repo-name/</code>. Add an empty <code>.nojekyll</code> file so every asset serves verbatim.</p>
+
+  <div class="rule"></div>
+  <p>That is the whole recipe: one canvas, a rotating coordinate system, a little easing, strong type,
+    and static hosting. The other 24 sites each swap the central technique — shaders, particles,
+    isometric 3D, audio-reactive gradients — but the discipline is the same.</p>
+
+  <footer>Designed &amp; built by <strong>Fable</strong> · Part of a 25-site showcase · <a href="../">Return to ZODIAC →</a></footer>
+</div>
+</body>
+</html>

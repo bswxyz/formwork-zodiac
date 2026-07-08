@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>document.documentElement.classList.add('js')</script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ZODIAC — Read the sky</title>
+<meta name="description" content="ZODIAC is a celestial cartography house. An interactive star map of the twelve houses — a living sky of drifting, twinkling constellations you can read by hand." />
+<meta name="theme-color" content="#070a18" />
+<meta property="og:title" content="ZODIAC — Read the sky" />
+<meta property="og:description" content="A living atlas of the twelve houses, drawn in light. Hover the heavens, choose a sign, watch its figure ignite." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<canvas id="skymap" aria-hidden="true"></canvas>
+<div class="sky-fallback" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="./">ZODIAC<span class="brand-star">✦</span></a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#twelve">The Twelve</a>
+    <a href="#reading">The Reading</a>
+    <a class="nav-guide" href="./guide/">Guide</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <p class="eyebrow hero-el">Celestial cartography · Est. MMXXVI</p>
+      <h1 id="hero-title" class="hero-title hero-el">ZODIAC</h1>
+      <p class="tagline hero-el"><em>Read the sky.</em></p>
+      <p class="hero-sub hero-el">A living atlas of the twelve houses, drawn in light.
+        Drift the cursor across the heavens, choose a sign, and watch its figure ignite.</p>
+
+      <div class="readout hero-el" role="group" aria-label="The sky tonight">
+        <p class="readout-title">The sky tonight</p>
+        <dl class="readout-grid">
+          <div><dt>Sidereal</dt><dd id="rd-lst">--:--:--</dd></div>
+          <div><dt>Moon</dt><dd id="rd-moon">—</dd></div>
+          <div><dt>Illum.</dt><dd id="rd-illum">—</dd></div>
+          <div><dt>Station</dt><dd id="rd-station">51.4769°N · 0.0005°W</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero-legend hero-el">
+        <span class="hl-label">Choose a sign</span>
+        <div class="hl-glyphs" id="hero-legend" role="group" aria-label="Highlight a zodiac constellation"></div>
+      </div>
+    </div>
+    <div class="scroll-cue hero-el" aria-hidden="true"><span></span>the twelve</div>
+  </section>
+
+  <section class="band" aria-hidden="true">
+    <div class="band-track" id="band-track"></div>
+  </section>
+
+  <section id="twelve" class="twelve">
+    <div class="section-head">
+      <p class="index reveal">I — XII</p>
+      <h2 class="reveal">The Twelve</h2>
+      <p class="section-lede reveal">Twelve houses divide the ecliptic — the sun's slow road through the year.
+        Hover a house to raise its constellation in the sky above; select it to hold the light.</p>
+    </div>
+    <div class="sign-grid" id="sign-grid"></div>
+  </section>
+
+  <section id="reading" class="reading">
+    <div class="reading-inner">
+      <p class="eyebrow reveal">The Reading</p>
+      <h2 class="reveal">The sky was the first map, and the first story.</h2>
+      <p class="reading-text reveal">Long before there were coastlines on paper, there were figures in the dark —
+        a ram, a pair of scales, a scorpion with a curled tail. People joined the brightest points
+        with imagined lines and hung their calendar, their harvest, and their fate on the result.
+        A constellation is not a thing in the sky. It is an act of reading.</p>
+      <blockquote class="pullquote reveal">
+        <p>We do not chart the stars. We chart the lines we choose to draw between them.</p>
+      </blockquote>
+      <p class="reading-text reveal">ZODIAC treats the night as an instrument. The twelve houses are not
+        predictions but positions — coordinates for where you stand in a turning year. The wheel above
+        rotates as the real sky does, one full turn against the frame, patient and indifferent.
+        Hold a sign and the map leans toward it, the way a reader leans toward a familiar line.</p>
+      <p class="reading-sign reveal">— The Cartographers of ZODIAC</p>
+    </div>
+  </section>
+
+  <section class="ephemeris" aria-label="Almanac">
+    <div class="eph-grid">
+      <article class="eph-card reveal">
+        <p class="eph-k">01</p>
+        <h3>The Ecliptic</h3>
+        <p>The apparent path of the sun, tilted 23.4° to the celestial equator. Every planet keeps close to it — which is why the twelve houses form a band, not a scatter.</p>
+      </article>
+      <article class="eph-card reveal">
+        <p class="eph-k">02</p>
+        <h3>Precession</h3>
+        <p>Earth wobbles like a slowing top, one turn every 25,772 years. The pole star drifts; the signs slip against the seasons. No sky is fixed.</p>
+      </article>
+      <article class="eph-card reveal">
+        <p class="eph-k">03</p>
+        <h3>Sidereal Time</h3>
+        <p>The clock the stars keep, four minutes faster than the sun each day. The readout above is the right ascension now crossing the meridian at Greenwich.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <p class="footer-brand">ZODIAC<span class="brand-star">✦</span></p>
+    <p class="footer-tag">Read the sky — a study in celestial cartography.</p>
+  </div>
+  <div class="footer-bottom">
+    <span>© MMXXVI ZODIAC · Charted under a clear sky</span>
+    <span>Designed &amp; built by <strong>Fable</strong> · <a href="./guide/">How this was built →</a></span>
+  </div>
+</footer>
+
+<script src="./main.js"></script>
+</body>
+</html>
