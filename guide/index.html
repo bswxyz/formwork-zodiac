@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ZODIAC — Guide · How this was built</title>
-<meta name="description" content="How the ZODIAC site was designed and built by Fable: an interactive canvas star map of twelve constellations on a slowly rotating ecliptic wheel, with parallax, twinkle and shooting stars." />
+<meta name="description" content="How the ZODIAC site was designed and built by Formwork: an interactive canvas star map of twelve constellations on a slowly rotating ecliptic wheel, with parallax, twinkle and shooting stars." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
@@ -48,7 +48,7 @@
 
   <span class="tag">Build guide · Site 25 of 25</span>
   <h1>An interactive sky, drawn as a <em>rotating wheel</em>.</h1>
-  <p class="lede">ZODIAC is one of 25 sites designed and built by Fable to demonstrate web design,
+  <p class="lede">ZODIAC is one of 25 sites designed and built by Formwork to demonstrate web design,
     motion, and restraint. Here is exactly how the star map was made — and how you can build the same.</p>
 
   <h2>The idea</h2>
@@ -94,8 +94,8 @@ const sy = cy + ry * S + cam.y + par.y * depth;</code></pre>
   <h2>Ship it on GitHub Pages</h2>
   <p>Every site here is static, so hosting is three commands:</p>
   <pre><code>git init -b main &amp;&amp; git add -A &amp;&amp; git commit -m "ship"
-gh repo create fable-zodiac --public --source=. --push
-gh api --method POST /repos/OWNER/fable-zodiac/pages \
+gh repo create formwork-zodiac --public --source=. --push
+gh api --method POST /repos/OWNER/formwork-zodiac/pages \
   -f 'source[branch]=main' -f 'source[path]=/'</code></pre>
   <p>Use <strong>relative paths</strong> (<code>./main.js</code>, not <code>/main.js</code>) because project
     Pages live under <code>/repo-name/</code>. Add an empty <code>.nojekyll</code> file so every asset serves verbatim.</p>
@@ -105,7 +105,7 @@ gh api --method POST /repos/OWNER/fable-zodiac/pages \
     and static hosting. The other 24 sites each swap the central technique — shaders, particles,
     isometric 3D, audio-reactive gradients — but the discipline is the same.</p>
 
-  <footer>Designed &amp; built by <strong>Fable</strong> · Part of a 25-site showcase · <a href="../">Return to ZODIAC →</a></footer>
+  <footer>Designed &amp; built by <strong>Formwork</strong> · Part of a 25-site showcase · <a href="../">Return to ZODIAC →</a></footer>
 </div>
 </body>
 </html>
